@@ -22,6 +22,12 @@ export PKG_REL=none
 export WHAT_AM_I=none
 
 ##
+# Docker related
+##
+export DOCKER_CONTAINER_NAME=drunk_dev
+export DOCKER_USER_FOLDER=/home/developer
+
+##
 # Empty string variable's
 ##
 export MAKEPKG_EXTRA_ARG=" "

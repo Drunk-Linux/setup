@@ -33,8 +33,14 @@ clean_pkg() {
     done
 }
 
-# TODO
 clean_pkg_docker() {
-    drunk_debug "EXECUTED - Build pkg in docker"
-    drunk_err "Sorry but docker way isn't implemented yet"
+    docker_initial_setup
+
+    for (( p=0; p<${#PKG_LIST[@]}; p++ )); do
+    PKG_NAME=$(basename "${PKG_LIST[p]}")
+
+    drunk_message "DOCKER: $PKG_NAME has been selected for cleaning"
+    docker_user_run_cmd "cd ~/DRUNK && ./drunk -c ${PKG_NAME}"
+
+    done
 }

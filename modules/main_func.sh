@@ -3,8 +3,19 @@
 ##
 
 env_setup() {
+    # Make sure that our developer dosent run this script as root
     check_user
-    check_projects
+
+    # Safety check so things dont get re-runned
+    if [ -f $P_ROOT/setup/checks/is_checked ]; then
+        drunk_debug "Developer has passed initally required steps"
+    else
+        install_required_deps
+        check_projects
+
+        # Tell the script that inital setup is done
+        touch $P_ROOT/setup/checks/is_checked
+    fi
 }
 
 check_projects() {
@@ -42,6 +53,12 @@ run_bootstrap() {
         [Nn]* ) echo " ";;
         * ) echo "Assuming no";;
     esac
+}
+
+install_required_deps() {
+    REQ_PKGS=" docker nano mpfr mpc base-devel"
+    drunk_message "Please allow this one time to run inital setup of bottle install"
+    sudo bottle -Sy --needed $REQ_PKGS
 }
 
 create_folders() {

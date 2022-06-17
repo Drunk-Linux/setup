@@ -37,8 +37,14 @@ build_pkg() {
     done
 }
 
-# TODO
 build_pkg_docker() {
-    drunk_debug "EXECUTED - Build pkg in docker"
-    drunk_err "Sorry but docker way isn't implemented yet"
+    docker_initial_setup
+
+    for (( p=0; p<${#PKG_LIST[@]}; p++ )); do
+    PKG_NAME=$(basename "${PKG_LIST[p]}")
+
+    drunk_message "DOCKER: Started compiling package $PKG_NAME"
+    docker_user_run_cmd "cd ~/DRUNK && ./drunk -b ${PKG_NAME}"
+
+    done
 }

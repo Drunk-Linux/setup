@@ -1,0 +1,5 @@
+# Ignore specific files that are created by the script's / modules
+
+## checks
+checks/docker_ready
+checks/is_checked

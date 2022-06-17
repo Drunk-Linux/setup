@@ -22,6 +22,6 @@ install_dep() {
     drunk_message "Bottle can install these packages ' $FULL_DEP_LIST ' so ' $PKG_NAME ' can be compiled"
 
     drunk_spacer
-    sudo bottle -Sy --needed $FULL_DEP_LIST
+    sudo -S bottle -Sy --needed $FULL_DEP_LIST
     drunk_spacer
 }

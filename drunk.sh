@@ -6,11 +6,7 @@ set -e -o pipefail -u
 #   Export some needed things for head script to work with
 ##
 
-if [ -d setup/drunk.sh ]; then
-    cd .
-else
-    cd "$(realpath "$(dirname "$0")")/../"
-fi
+cd "$(dirname "$0")"
 
 export P_ROOT=$(pwd)
 
@@ -39,6 +35,9 @@ source $P_ROOT/setup/modules/pkg_build.sh
 # Feed it again to clean leftovers on pkg's
 source $P_ROOT/setup/modules/pkg_clean.sh
 
+# Feed docker instructions for drunk/setup
+source $P_ROOT/setup/modules/docker_main.sh
+
 ##
 #   Main Functions
 ##
@@ -53,7 +52,7 @@ declare -a PKG_LIST=()
 # TODO
 # Currently DrunkOS only supports x86_64
 # so lets leave it here as hardcoded
-# ( modules use this declaration so implementing proper way should be easy )
+# ( modules use this declaration so implementing proper way should be easy later on )
 ###
 declare -a P_ARCH=x86_64
 
@@ -113,13 +112,12 @@ case "$DRUNK_BUILD" in
         esac
     ;;
     "false")
-        case "$DRUNK_CLEAN" in
+        case "$DRUNK_DOCKER" in
             "true")
-                clean_pkg
+                clean_pkg_docker
             ;;
-
             "false")
-                return
+                clean_pkg
             ;;
         esac
     ;;
