@@ -6,7 +6,6 @@ export DRUNK_BUILD=false
 export DRUNK_CLEAN=false
 export DRUNK_DOCKER=false
 export P_ARCH=none
-export DEP_REMOVE=true
 
 ##
 # Failsafe incase of error

@@ -80,6 +80,7 @@ while (($# >= 1)); do
         else
             export DRUNK_DOCKER=true
         fi ;;
+        -dr|--docker-reset) docker_reset && drunk_message "Docker reset done, exiting" && exit ;;
         *)
         export PKG_LIST+=($1);;
         -*) unknown_option $1;;

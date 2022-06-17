@@ -22,12 +22,6 @@ install_dep() {
     drunk_message "Bottle can install these packages ' $FULL_DEP_LIST ' so ' $PKG_NAME ' can be compiled"
 
     drunk_spacer
-    sudo -S bottle -Sy --needed $FULL_DEP_LIST
+    sudo -S bottle -Sy --needed --noconfirm $FULL_DEP_LIST
     drunk_spacer
-}
-
-dep_remove_after_build() {
-    drunk_message "Removing deps that package needed for linking"
-    drunk_debug "( so no hidden dep links happen for other packages )"
-    sudo -S bottle -R $FULL_DEP_LIST
 }
