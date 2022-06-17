@@ -11,7 +11,9 @@
 3. Open terminal in that empty directory where you have repo called setup
 
 ```
-$ ./setup/drunk.sh
+$ ln -sf setup/drunk.sh drunk
+
+$ ./drunk -h
 ```
 
 4. Now youre ready to start adding/changing packages
