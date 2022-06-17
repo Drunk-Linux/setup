@@ -46,5 +46,9 @@ build_pkg_docker() {
     drunk_message "DOCKER: Started compiling package $PKG_NAME"
     docker_user_run_cmd "cd ~/DRUNK && ./drunk -b ${PKG_NAME}"
 
+    # Reset is needed for containers so they start to build new package without older pkg dependencies
+    # Keeps hidden linked deps results lower
+    docker_reset
+
     done
 }

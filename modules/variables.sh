@@ -6,6 +6,7 @@ export DRUNK_BUILD=false
 export DRUNK_CLEAN=false
 export DRUNK_DOCKER=false
 export P_ARCH=none
+export DEP_REMOVE=true
 
 ##
 # Failsafe incase of error
@@ -36,7 +37,7 @@ export MAKEPKG_EXTRA_ARG=" "
 # Developer friend
 ##
 
-export SHOW_DEBUG=true
+export SHOW_DEBUG=false
 
 # This is needed so system catches up with all exports
 sleep 0.1

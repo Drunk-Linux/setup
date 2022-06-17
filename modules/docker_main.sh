@@ -37,8 +37,14 @@ docker_initial_sysedit() {
     # Add developer user ( used to build pkg's without root
     docker_run_cmd useradd developer -m -g wheel
 
+    # Perms fixes
+    docker_run_cmd bash -c /home/developer/DRUNK/setup/docker/developer.sh
+
     # Change sudoers file to not ask password for all users
     docker_run_cmd bash -c /home/developer/DRUNK/setup/docker/fix_sudo.sh
+
+    # Locales issue
+    docker_run_cmd bash -c /home/developer/DRUNK/setup/docker/locale.sh
 }
 
 docker_setup_container() {
@@ -48,6 +54,25 @@ docker_setup_container() {
         --volume $P_ROOT:$DOCKER_USER_FOLDER/DRUNK \
         --tty \
         hilledkinged/drunk /bin/bash
+}
+
+docker_reset() {
+    drunk_debug "Resetting old container so installed pkg deps wont get linked to other packages"
+    drunk_message "Stopping old conatiner"
+
+    sudo docker container stop $DOCKER_CONTAINER_NAME
+    sleep 1
+
+    sudo docker container rm $DOCKER_CONTAINER_NAME
+    sleep 1
+
+    docker_setup_container
+    sleep 1
+
+    sudo docker start $DOCKER_CONTAINER_NAME >/dev/null
+    sleep 1
+
+    docker_initial_sysedit
 }
 
 docker_start() {

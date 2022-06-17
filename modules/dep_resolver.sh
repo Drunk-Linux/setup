@@ -14,7 +14,7 @@ resolve_dep() {
 
     export PKG_VERSION=$pkgver
     export PKG_REL=$pkgrel
-    FULL_DEP_LIST="${depends[*]} ${makedepends[*]}"
+    export FULL_DEP_LIST="${depends[*]} ${makedepends[*]}"
 }
 
 install_dep() {
@@ -24,4 +24,10 @@ install_dep() {
     drunk_spacer
     sudo -S bottle -Sy --needed $FULL_DEP_LIST
     drunk_spacer
+}
+
+dep_remove_after_build() {
+    drunk_message "Removing deps that package needed for linking"
+    drunk_debug "( so no hidden dep links happen for other packages )"
+    sudo -S bottle -R $FULL_DEP_LIST
 }
