@@ -62,13 +62,17 @@ declare -a PKG_LIST=()
 ###
 declare -a P_ARCH=x86_64
 
-if [ "$#" -lt 1 ]; then show_help; fi
+if [ "$#" -lt 1 ]; then
+    show_help
+fi
+
 while (($# >= 1)); do
     case "$1" in
         --) shift 1; break;;
         -h|--help) show_help;;
         -b|--build) export DRUNK_BUILD=true;;
-        -f|--force-build) export MAKEPKG_EXTRA_ARG=" -f ";;
+        -f|--force-build) export MAKEPKG_EXTRA_ARG+=" -f ";;
+        -ne|--no-extract) export MAKEPKG_EXTRA_ARG+=" -e ";;
         -c|--clean) export DRUNK_CLEAN=true;;
         -d|--docker)
         if [ $# -eq 1 ]; then
@@ -81,8 +85,7 @@ while (($# >= 1)); do
             export DRUNK_DOCKER=true
         fi ;;
         -dr|--docker-reset) docker_reset && drunk_message "Docker reset done, exiting" && exit ;;
-        *)
-        export PKG_LIST+=($1);;
+        *) export PKG_LIST+=($1);;
         -*) unknown_option $1;;
         --*) unknown_option $1;;
     esac
@@ -119,12 +122,20 @@ case "$DRUNK_BUILD" in
         esac
     ;;
     "false")
-        case "$DRUNK_DOCKER" in
+        case "$DRUNK_CLEAN" in
             "true")
-                clean_pkg_docker
+                case "$DRUNK_DOCKER" in
+                    "true")
+                        clean_pkg_docker
+                    ;;
+
+                    "false")
+                        pkg_clean
+                    ;;
+                esac
             ;;
             "false")
-                clean_pkg
+                drunk_err "No proper commands have been feed ( please see -h / --help )"
             ;;
         esac
     ;;

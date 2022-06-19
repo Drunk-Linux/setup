@@ -79,13 +79,14 @@ unknown_option() {
 }
 
 show_help() {
-    echo "## Usage of drunk script"
-    echo " "
-    echo " -b or --build pkgname    : Will build a pkg you asked for ( Assumes you have deps installed )"
-    echo " -f or --force-build      : Will add -f to makepkg so it will ignore if pkg is already built"
-    echo " -c or --clean            : Will clean up pkgbuild leftovers"
-    echo " -d or --docker           : This will make pkg builder use docker environment"
-    echo " -dr or --docker-reset    : This reset's docker container ( if it breaks for some reson )"
-
+    drunk_message "###"
+    drunk_message "# Usage of drunk script"
+    drunk_message "###\n"
+    drunk_message " -b or --build pkgname    : Will build a pkg you asked for ( Assumes you have deps installed )"
+    drunk_message " -f or --force-build      : Will add -f to makepkg so it will ignore if pkg is already built"
+    drunk_message " -ne or --no-extract      : Will add -e to makepkg so prepare + extracting src over existing one is skipped ( basically resume compile flag )"
+    drunk_message " -c or --clean            : Will clean up pkgbuild leftovers"
+    drunk_message " -d or --docker           : This will make pkg builder use docker environment"
+    drunk_message " -dr or --docker-reset    : This reset's docker container ( if it breaks for some reson )"
     exit 1
 }
